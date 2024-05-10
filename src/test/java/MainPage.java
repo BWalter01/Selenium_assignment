@@ -12,6 +12,7 @@ public class MainPage extends PageBase{
     public MainPage(WebDriver driver) {
         super(driver);
         this.driver.get("https://kockashop.hu/");
+        setCookies();
     }
 
     public String getFooterText() {
