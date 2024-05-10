@@ -65,4 +65,12 @@ public class PageBase {
 
         this.driver.navigate().refresh();
     }
+
+    public void implicitWait(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
