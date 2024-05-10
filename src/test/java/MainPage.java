@@ -19,11 +19,6 @@ public class MainPage extends PageBase{
         return this.waitAndReturnElement(By.className("footer")).getText();
     }
 
-    public void acceptNecessaryCookies() {
-        By locator = By.xpath("//button[text()='Elengedhetetlen sütik elfogadása']");
-        this.waitAndReturnElement(locator).click();
-    }
-
     public LoginPage getLoginPage() {
         By locator = By.xpath("//a[text()='Belépés']");
         this.waitAndReturnElement(locator).click();
@@ -31,11 +26,15 @@ public class MainPage extends PageBase{
     }
 
     public void logout() {
-        By locator = By.xpath("//a[text()='Fiókom']");
-        this.waitAndReturnElement(locator).click();
+        By locator = By.xpath("//a[text()='Kilépés']");
 
-        locator = By.xpath("//a[text()='Kilépés']");
-        this.waitAndReturnElement(locator).click();
+        WebElement logoutButton = this.waitAndReturnElement(locator);
+
+        implicitWait();
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", logoutButton);
+
     }
 
 
