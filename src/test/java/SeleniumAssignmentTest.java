@@ -32,9 +32,14 @@ public class SeleniumAssignmentTest {
 
         Assert.assertTrue(mainPage.getFooterText().contains("LEGO"));
 
-        mainPage.acceptNecessaryCookies();
         LoginPage loginPage = mainPage.getLoginPage();
         loginPage.login();
+
+
+        WebElement tooltip = mainPage.testHoverOnElement();
+        // Assert that the tooltip is displayed
+        Assert.assertTrue(tooltip.isDisplayed());
+
 
         mainPage.logout();
 

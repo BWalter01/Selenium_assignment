@@ -38,6 +38,23 @@ public class MainPage extends PageBase{
     }
 
 
+    public WebElement testHoverOnElement() {
+        // Create an instance of Actions class
+        Actions actions = new Actions(this.driver);
+
+        // Find the element to hover over
+        WebElement elementToHover = waitAndReturnElement(By.id("top4-btn"));
+        // Find the tooltip that should appear when hovering over the element
+
+        implicitWait();
+        // Perform the hover action
+        actions.moveToElement(elementToHover).perform();
+
+        // Wait for the tooltip to become visible
+        WebElement tooltip = waitAndReturnElement(By.xpath("//a[@href='/rendeleseim' and text()='Rendeléseim']"));
+
+        return tooltip;
+    }
 
     public void openTheSearchBar() {
         this.waitAndReturnElement(By.className("search-bar-toggler")).click();
