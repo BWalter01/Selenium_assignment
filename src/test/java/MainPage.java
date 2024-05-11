@@ -1,5 +1,4 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -21,20 +20,14 @@ public class MainPage extends PageBase {
         this.waitAndReturnElement(locator).click();
         return new LoginPage(this.driver);
     }
-    public void waitAfterLogin(){
-        waitAndReturnElement(By.className("owl-carousel"));
+
+    public String testMainPageAfterLogin() {
+        return waitAndReturnElement(By.xpath("//h2[@class='h-open' and text()='Kiemelt témák']")).getText();
     }
 
     public void logout() {
-        By locator = By.xpath("//a[text()='Kilépés']");
-
-        WebElement logoutButton = this.waitAndReturnElement(locator);
-
-        implicitWait();
-
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();", logoutButton);
-
+        By logoutButtonLocator = By.xpath("//a[text()='Kilépés']");
+        clickOnButton(logoutButtonLocator);
     }
 
     public String getPageTitle() {
@@ -42,44 +35,38 @@ public class MainPage extends PageBase {
     }
 
     public WebElement testHoverOnElement() {
-        // Create an instance of Actions class
         Actions actions = new Actions(this.driver);
 
-        // Find the element to hover over
         WebElement elementToHover = waitAndReturnElement(By.id("top4-btn"));
-        // Find the tooltip that should appear when hovering over the element
 
         implicitWait();
-        // Perform the hover action
         actions.moveToElement(elementToHover).perform();
 
-        // Wait for the tooltip to become visible
         WebElement tooltip = waitAndReturnElement(By.xpath("//a[@href='/rendeleseim' and text()='Rendeléseim']"));
 
         return tooltip;
     }
 
     public SearchResultPage search(String keys) {
-        this.waitAndReturnElement(By.xpath("//input[@type='text' and @name='search']")).sendKeys(keys);
+        By searchBarLocator = By.xpath("//input[@type='text' and @name='search']");
+        WebElement searchBar = this.waitAndReturnElement(searchBarLocator);
 
-        By locator = By.id("btn_search");
-        WebElement searchButton = this.waitAndReturnElement(locator);
+        clickOnButton(searchBarLocator);
 
-        implicitWait();
+        searchBar.clear();
+        searchBar.sendKeys(keys);
 
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();", searchButton);
+        waitForSearchResultDropDown();
+
+        By searchButtonLocator = By.id("btn_search");
+        clickOnButton(searchButtonLocator);
 
         return new SearchResultPage(this.driver);
     }
 
-    public String readDropDown(){
+    public String readDropDown() {
         By locator = By.xpath("//a[@href='/rendeleseim' and text()='Rendeléseim']");
         return this.waitAndReturnElement(locator).getText();
-    }
-
-    public void navigateBack() {
-        this.driver.navigate().back();
     }
 
     public CartPage getCartPage() {

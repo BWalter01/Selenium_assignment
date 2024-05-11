@@ -1,5 +1,6 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -66,11 +67,25 @@ public class PageBase {
         this.driver.navigate().refresh();
     }
 
+    public void clickOnButton(By locator) {
+        implicitWait();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        js.executeScript("arguments[0].click();", this.waitAndReturnElement(locator));
+    }
+
     public void implicitWait(){
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    public void navigateBack() {
+        this.driver.navigate().back();
+    }
+
+    public void waitForSearchResultDropDown() {
+        waitAndReturnElement(By.xpath("//div[@class='search']/div[@id='results'][@style='display: block;']"));
     }
 }

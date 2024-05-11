@@ -15,7 +15,6 @@ public class SeleniumAssignmentTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--window-size=1920,1080");
         this.driver = new ChromeDriver(options);
-        this.driver.manage().window().maximize();
     }
 
     @Test
@@ -27,7 +26,7 @@ public class SeleniumAssignmentTest {
         LoginPage loginPage = mainPage.getLoginPage();
         loginPage.login();
 
-        mainPage.waitAfterLogin();
+        Assert.assertEquals(mainPage.testMainPageAfterLogin(), "KIEMELT TÉMÁK");
 
         Assert.assertTrue(mainPage.getPageTitle().contains("Kockashop"));
 
