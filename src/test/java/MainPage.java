@@ -21,6 +21,9 @@ public class MainPage extends PageBase {
         this.waitAndReturnElement(locator).click();
         return new LoginPage(this.driver);
     }
+    public void waitAfterLogin(){
+        waitAndReturnElement(By.className("owl-carousel"));
+    }
 
     public void logout() {
         By locator = By.xpath("//a[text()='Kilépés']");
