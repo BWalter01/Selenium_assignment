@@ -34,6 +34,9 @@ public class SeleniumAssignmentTest {
         WebElement tooltip = mainPage.testHoverOnElement();
         // Assert that the tooltip is displayed
         Assert.assertTrue(tooltip.isDisplayed());
+        CartPage cartPage = mainPage.getCartPage();
+        Assert.assertTrue(cartPage.getBodyText().contains("kosár"));
+        mainPage.navigateBack();
 
 
         mainPage.logout();
