@@ -3,7 +3,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -28,6 +27,7 @@ public class SeleniumAssignmentTest {
         LoginPage loginPage = mainPage.getLoginPage();
         loginPage.login();
 
+        mainPage.waitAfterLogin();
 
         Assert.assertTrue(mainPage.getPageTitle().contains("Kockashop"));
 
@@ -42,19 +42,19 @@ public class SeleniumAssignmentTest {
         Assert.assertTrue(cartPage.getBodyText().contains("kosár"));
         mainPage.navigateBack();
 
+        WishListPage wishListPage = mainPage.getWishListPage();
+        Assert.assertTrue(wishListPage.getBodyText().contains("Kedvenceim"));
+        mainPage.navigateBack();
+
         NewProductsPage newProductsPage = mainPage.getNewProductsPage();
         Assert.assertTrue(newProductsPage.getBodyText().contains("Újdonságok"));
         mainPage.navigateBack();
 
-        mainPage.logout();
+        Assert.assertTrue(mainPage.testHoverOnElement().isDisplayed());
 
-//        mainPage.openTheSearchBar();
-//        SearchResultPage searchResultPage = mainPage.search("Students");
-//        mainPage.typeIntoSearchBar("Students\n");By.xpath("//title")
-//        Assert.assertTrue(searchResultPage.getBodyText().contains("FOUND"));
-//        Assert.assertTrue(searchResultPage.getBodyText().contains("Current Students"));
-//
-//        searchResultPage.clickByTest("Current Students");
+        Assert.assertEquals(mainPage.readDropDown(), "Rendeléseim");
+
+        mainPage.logout();
     }
 
     @After
