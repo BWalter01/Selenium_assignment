@@ -56,16 +56,44 @@ public class MainPage extends PageBase {
         return tooltip;
     }
 
-    public void openTheSearchBar() {
-        this.waitAndReturnElement(By.className("search-bar-toggler")).click();
-    }
-
-    public void typeIntoSearchBar(String keys) {
-        this.waitAndReturnElement(By.name("search")).sendKeys(keys);
-    }
-
     public SearchResultPage search(String keys) {
-        this.waitAndReturnElement(By.className("search-field")).sendKeys(keys + "\n");
+        this.waitAndReturnElement(By.xpath("//input[@type='text' and @name='search']")).sendKeys(keys);
+
+        By locator = By.id("btn_search");
+        WebElement searchButton = this.waitAndReturnElement(locator);
+
+        implicitWait();
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", searchButton);
+
         return new SearchResultPage(this.driver);
+    }
+
+    public String readDropDown(){
+        By locator = By.xpath("//a[@href='/rendeleseim' and text()='Rendeléseim']");
+        return this.waitAndReturnElement(locator).getText();
+    }
+
+    public void navigateBack() {
+        this.driver.navigate().back();
+    }
+
+    public CartPage getCartPage() {
+        By locator = By.xpath("//a[@href='/kosar']");
+        this.waitAndReturnElement(locator).click();
+        return new CartPage(this.driver);
+    }
+
+    public WishListPage getWishListPage() {
+        By locator = By.xpath("//a[@title='Kevenceim']");
+        this.waitAndReturnElement(locator).click();
+        return new WishListPage(this.driver);
+    }
+
+    public NewProductsPage getNewProductsPage() {
+        By locator = By.xpath("//a[text()='Újdonságok']");
+        this.waitAndReturnElement(locator).click();
+        return new NewProductsPage(this.driver);
     }
 }
