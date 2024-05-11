@@ -31,13 +31,20 @@ public class SeleniumAssignmentTest {
 
         Assert.assertTrue(mainPage.getPageTitle().contains("Kockashop"));
 
-        WebElement tooltip = mainPage.testHoverOnElement();
-        // Assert that the tooltip is displayed
-        Assert.assertTrue(tooltip.isDisplayed());
+        SearchResultPage searchResultPage = mainPage.search("Csillagromboló");
+
+        Assert.assertTrue(searchResultPage.getBodyText().contains("Találatok"));
+        Assert.assertTrue(searchResultPage.getBodyText().contains("Csillagromboló"));
+
+        mainPage.navigateBack();
+
         CartPage cartPage = mainPage.getCartPage();
         Assert.assertTrue(cartPage.getBodyText().contains("kosár"));
         mainPage.navigateBack();
 
+        NewProductsPage newProductsPage = mainPage.getNewProductsPage();
+        Assert.assertTrue(newProductsPage.getBodyText().contains("Újdonságok"));
+        mainPage.navigateBack();
 
         mainPage.logout();
 
